@@ -53,18 +53,9 @@ class SudokuBoard(object):
         for index, value in enumerate(a_list):
             yield index, value
 
-    def get_col_incrementer(self, col_index):
-        incrementer = 0  # 1st 3 columns
-        if col_index == 3:
-            incrementer = 1
-        if col_index == 6:
-            incrementer = 2
-
-        return incrementer
-
     def get_block_index(self, row_index, col_index):
+        col_incrementer =  {0: 0, 3: 1, 6: 2}
         block = 0
-        col_incrementer = self.get_col_incrementer(col_index)
         if 0 <= row_index <= 2:
             block = 0
         elif 3 <= row_index <= 5:
@@ -74,7 +65,7 @@ class SudokuBoard(object):
         else:
             raise Exception('Invalid Row Index')
 
-        return block + col_incrementer
+        return block + col_incrementer.get(col_index)
 
     def reset_board(self):
         """reset the board to the state it was originally created in."""
